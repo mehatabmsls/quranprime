@@ -29,7 +29,7 @@ export default function Home() {
   }
 
   function playAudio(chapter: number) {
-    if (currentId && currentId === chapter) {
+    if (currentSound && currentId && currentId === chapter) {
       currentSound.play();
       setPause(chapter);
     } else {
@@ -78,6 +78,7 @@ export default function Home() {
             setFolder("teluguaudio");
             closePrevPause();
             Howler.stop();
+            setCurrentSound("");
           }}
           className={`px-4 py-2 bg-[rgb(32,32,32)] rounded-lg cursor-pointer ${
             active === "telugu" ? "bg-blue-600" : ""
@@ -91,6 +92,7 @@ export default function Home() {
             setFolder("hindiaudio");
             closePrevPause();
             Howler.stop();
+            setCurrentSound("");
           }}
           className={`px-4 py-2 bg-[rgb(32,32,32)] rounded-lg cursor-pointer ${
             active === "hindi" ? "bg-blue-600" : ""
@@ -104,6 +106,7 @@ export default function Home() {
             setFolder("englishaudio");
             closePrevPause();
             Howler.stop();
+            setCurrentSound("");
           }}
           className={`px-4 py-2 bg-[rgb(32,32,32)] rounded-lg cursor-pointer ${
             active === "english" ? "bg-blue-600" : ""
