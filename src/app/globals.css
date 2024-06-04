@@ -22,3 +22,110 @@ body {
     display: block;
   }
 }
+
+.audio-player {
+  width: 100%;
+  padding: 10px;
+  background-color: rgb(32, 32, 32); /* Example background color */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Range input styling */
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 8px;
+  background: transparent;
+  margin: 0;
+  padding: 0;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 8px;
+  cursor: pointer;
+  animate: 0.2s;
+  background: #000000;
+  border-radius: 4px;
+  border: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ffffff;
+  cursor: pointer;
+  margin-top: -4px; /* Adjust based on the thumb size */
+}
+
+input[type="range"]::-moz-range-track {
+  width: 100%;
+  height: 8px;
+  cursor: pointer;
+  animate: 0.2s;
+  background: #000000;
+  border-radius: 4px;
+  border: none;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ffffff;
+  cursor: pointer;
+}
+
+input[type="range"]::-ms-track {
+  width: 100%;
+  height: 8px;
+  cursor: pointer;
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+  border: none;
+}
+
+input[type="range"]::-ms-fill-lower {
+  background: #ddd;
+  border-radius: 4px;
+}
+
+input[type="range"]::-ms-fill-upper {
+  background: #ddd;
+  border-radius: 4px;
+}
+
+input[type="range"]::-ms-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ffffff;
+  cursor: pointer;
+}
+
+input[type="range"]:focus {
+  outline: none;
+}
+
+/* Finished track styling */
+input[type="range"].finished::-webkit-slider-runnable-track {
+  background: #4caf50; /* New color when finished */
+}
+
+input[type="range"].finished::-moz-range-track {
+  background: #4caf50; /* New color when finished */
+}
+
+input[type="range"].finished::-ms-fill-lower {
+  background: #4caf50; /* New color when finished */
+}
+
+input[type="range"].finished::-ms-fill-upper {
+  background: #4caf50; /* New color when finished */
+}
