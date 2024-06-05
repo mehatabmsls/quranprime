@@ -2,7 +2,7 @@
 import Image from "next/image";
 import surahs from "@/data/surahs";
 import { Howl, Howler } from "howler";
-import { Spline_Sans, Spline_Sans_Mono } from "next/font/google";
+import { Spline_Sans, Spline_Sans_Mono, Fira_Code } from "next/font/google";
 import { useState, useEffect } from "react";
 import useStore from "@/state/state";
 import { PuffLoader } from "react-spinners";
@@ -13,6 +13,8 @@ const fira = Spline_Sans_Mono({ subsets: ["latin"], weight: ["400"] });
 export default function Home() {
   const [active, setActive] = useState("telugu");
   const [folder, setFolder] = useState("teluguaudio");
+  const [rate, setRate] = useState("1.00X");
+  const [loop, setLoop] = useState(true);
   const [totalDuration, setTotalDuration] = useState("00:00:00");
   const [runningDuration, setRunningDuration] = useState("00:00:00");
   const setLoading = useStore((state: any) => state.setLoading);
@@ -24,18 +26,18 @@ export default function Home() {
   const currentId = useStore((state: any) => state.currentId);
   const closePrevPause = useStore((state: any) => state.closePrevPause);
 
-  useEffect(() => {
-    if (currentSound) {
-      currentSound.once("load", function () {
-        new Date(currentSound.duration() * 1000).toISOString().slice(11, 19);
-      });
-    }
-  }, [currentSound]);
+  // useEffect(() => {
+  //   if (currentSound) {
+  //     currentSound.once("load", function () {
+  //       new Date(currentSound.duration() * 1000).toISOString().slice(11, 19);
+  //     });
+  //   }
+  // }, [currentSound]);
 
-  function updateProgress() {
-    currentSound &&
-      new Date(currentSound.duration() * 1000).toISOString().slice(11, 19);
-  }
+  // function updateProgress() {
+  //   currentSound &&
+  //     new Date(currentSound.duration() * 1000).toISOString().slice(11, 19);
+  // }
 
   function pauseAudio(chapter: number) {
     if (currentSound && currentSound.playing()) {
@@ -57,9 +59,7 @@ export default function Home() {
         onload: () => {
           setLoading(chapter);
         },
-        onplay: () => {
-          // requestAnimationFrame(updateProgress);
-        },
+        onplay: () => {},
         onend: () => {
           setPause(chapter);
         },
@@ -69,6 +69,13 @@ export default function Home() {
       closePrevPause();
       setPause(chapter);
       setCurrent(chapter);
+      if (rate === "1.00X") {
+        sound.rate(1);
+      } else if (rate === "0.75X") {
+        sound.rate(0.75);
+      } else if (rate === "1.25X") {
+        sound.rate(1.25);
+      }
     }
   }
   return (
@@ -90,45 +97,51 @@ export default function Home() {
         </svg>
         Select Language
       </div>
-      <section className={`${spline} flex justify-center gap-4 pb-6`}>
+      <section className={`${fira.className} flex justify-center gap-4 pb-6`}>
         <div
           onClick={() => {
-            setActive("telugu");
-            setFolder("teluguaudio");
-            closePrevPause();
-            Howler.stop();
-            setCurrentSound("");
+            if (active != "telugu") {
+              setActive("telugu");
+              setFolder("teluguaudio");
+              closePrevPause();
+              Howler.stop();
+              setCurrentSound("");
+            }
           }}
           className={`px-4 py-2 bg-[rgb(32,32,32)] rounded-lg cursor-pointer ${
-            active === "telugu" ? "bg-blue-700" : ""
+            active === "telugu" ? "bg-blue-800" : ""
           }`}
         >
           Telugu
         </div>
         <div
           onClick={() => {
-            setActive("hindi");
-            setFolder("hindiaudio");
-            closePrevPause();
-            Howler.stop();
-            setCurrentSound("");
+            if (active != "hindi") {
+              setActive("hindi");
+              setFolder("hindiaudio");
+              closePrevPause();
+              Howler.stop();
+              setCurrentSound("");
+            }
           }}
           className={`px-4 py-2 bg-[rgb(32,32,32)] rounded-lg cursor-pointer ${
-            active === "hindi" ? "bg-blue-700" : ""
+            active === "hindi" ? "bg-blue-800" : ""
           }`}
         >
           Hindi
         </div>
         <div
           onClick={() => {
-            setActive("english");
-            setFolder("englishaudio");
-            closePrevPause();
-            Howler.stop();
-            setCurrentSound("");
+            if (active != "english") {
+              setActive("english");
+              setFolder("englishaudio");
+              closePrevPause();
+              Howler.stop();
+              setCurrentSound("");
+            }
           }}
           className={`px-4 py-2 bg-[rgb(32,32,32)] rounded-lg cursor-pointer ${
-            active === "english" ? "bg-blue-700" : ""
+            active === "english" ? "bg-blue-800" : ""
           }`}
         >
           English
@@ -217,18 +230,18 @@ export default function Home() {
 
           <div className="bg-[rgb(32,32,32)] w-full h-16 sticky bottom-0 flex justify-center items-center">
             <section className="flex justify-center items-center gap-6">
-              {/* <svg
+              <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 fill="currentColor"
-                className="size-6"
+                className="size-6 cursor-pointer"
               >
                 <path
                   fillRule="evenodd"
                   d="M4.755 10.059a7.5 7.5 0 0 1 12.548-3.364l1.903 1.903h-3.183a.75.75 0 1 0 0 1.5h4.992a.75.75 0 0 0 .75-.75V4.356a.75.75 0 0 0-1.5 0v3.18l-1.9-1.9A9 9 0 0 0 3.306 9.67a.75.75 0 1 0 1.45.388Zm15.408 3.352a.75.75 0 0 0-.919.53 7.5 7.5 0 0 1-12.548 3.364l-1.902-1.903h3.183a.75.75 0 0 0 0-1.5H2.984a.75.75 0 0 0-.75.75v4.992a.75.75 0 0 0 1.5 0v-3.18l1.9 1.9a9 9 0 0 0 15.059-4.035.75.75 0 0 0-.53-.918Z"
                   clipRule="evenodd"
                 />
-              </svg> */}
+              </svg>
               <svg
                 onClick={() => {
                   let currentPos = currentSound.seek();
@@ -241,7 +254,7 @@ export default function Home() {
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 fill="currentColor"
-                className="size-6"
+                className="size-6 cursor-pointer"
               >
                 <path
                   fillRule="evenodd"
@@ -258,7 +271,7 @@ export default function Home() {
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 fill="currentColor"
-                className="size-8 rotate-180"
+                className="size-8 rotate-180 cursor-pointer"
               >
                 <path
                   fillRule="evenodd"
@@ -305,7 +318,7 @@ export default function Home() {
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 fill="currentColor"
-                className="size-8"
+                className="size-8 cursor-pointer"
               >
                 <path
                   fillRule="evenodd"
@@ -321,7 +334,7 @@ export default function Home() {
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 fill="currentColor"
-                className="size-6"
+                className="size-6 cursor-pointer"
               >
                 <path
                   fillRule="evenodd"
@@ -329,7 +342,24 @@ export default function Home() {
                   clipRule="evenodd"
                 />
               </svg>
-              {/* <div>1X</div> */}
+              <div
+                onClick={() => {
+                  if (currentSound) {
+                    if (currentSound.rate() === 1) {
+                      currentSound.rate([1.25]);
+                      setRate("1.25X");
+                    } else if (currentSound.rate() === 1.25) {
+                      currentSound.rate([0.75]);
+                      setRate("0.75X");
+                    } else if (currentSound.rate() === 0.75) {
+                      currentSound.rate([1]);
+                      setRate("1.00X");
+                    }
+                  }
+                }}
+              >
+                {rate}
+              </div>
             </section>
           </div>
         </div>
