@@ -62,6 +62,9 @@ export default function Home() {
         onplay: () => {},
         onend: () => {
           setPause(chapter);
+          if (loop) {
+            playNext();
+          }
         },
       });
       sound.play();
@@ -108,8 +111,8 @@ export default function Home() {
               setCurrentSound("");
             }
           }}
-          className={`px-4 py-2 bg-[rgb(32,32,32)] rounded-lg cursor-pointer ${
-            active === "telugu" ? "bg-blue-800" : ""
+          className={`px-4 py-2 bg-[rgb(32,32,32)] rounded-lg flex justify-center items-center cursor-pointer ${
+            active === "telugu" ? "bg-slate-800" : ""
           }`}
         >
           Telugu
@@ -124,8 +127,8 @@ export default function Home() {
               setCurrentSound("");
             }
           }}
-          className={`px-4 py-2 bg-[rgb(32,32,32)] rounded-lg cursor-pointer ${
-            active === "hindi" ? "bg-blue-800" : ""
+          className={`px-4 py-2 bg-[rgb(32,32,32)] rounded-lg flex justify-center items-center cursor-pointer ${
+            active === "hindi" ? "bg-slate-800" : ""
           }`}
         >
           Hindi
@@ -140,18 +143,18 @@ export default function Home() {
               setCurrentSound("");
             }
           }}
-          className={`px-4 py-2 bg-[rgb(32,32,32)] rounded-lg cursor-pointer ${
-            active === "english" ? "bg-blue-800" : ""
+          className={`px-4 py-2 bg-[rgb(32,32,32)] rounded-lg flex justify-center items-center cursor-pointer ${
+            active === "english" ? "bg-slate-800" : ""
           }`}
         >
           English
         </div>
       </section>
-      <section className="flex flex-wrap my-6 mx-6 gap-6 justify-center">
+      <section className="flex flex-wrap my-6 mx-8 gap-6 justify-center">
         {main.map((item: any, index: number) => (
           <section
             key={index}
-            className={` w-[400px] flex px-6 py-2.5 text-[15px]  gap-6 bg-[rgb(32,32,32)] rounded-md justify-between items-center`}
+            className={` w-[375px] flex px-6 py-2.5 text-[15px]  gap-6 bg-[rgb(32,32,32)] rounded-md justify-between items-center`}
           >
             <section className="flex justify-center gap-6 bg-[rgb(32,32,32)]">
               <section className="flex justify-center items-center bg-[rgb(32,32,32)]">
@@ -169,7 +172,7 @@ export default function Home() {
                   {item.surah}
                 </div>
                 <div
-                  className={`${spline.className} bg-[rgb(32,32,32)] text-slate-400 text-lg`}
+                  className={`${fira.className} bg-[rgb(32,32,32)] text-slate-400 text-base`}
                 >
                   {item.englishName}
                 </div>
@@ -229,7 +232,7 @@ export default function Home() {
           </section> */}
 
           <div className="bg-[rgb(32,32,32)] w-full h-16 sticky bottom-0 flex justify-center items-center">
-            <section className="flex justify-center items-center gap-6">
+            <section className="flex justify-center items-center gap-5">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -343,6 +346,7 @@ export default function Home() {
                 />
               </svg>
               <div
+                className="cursor-pointer"
                 onClick={() => {
                   if (currentSound) {
                     if (currentSound.rate() === 1) {
