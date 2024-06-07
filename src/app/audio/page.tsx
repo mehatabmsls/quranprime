@@ -14,7 +14,7 @@ export default function Home() {
   const [active, setActive] = useState("telugu");
   const [folder, setFolder] = useState("teluguaudio");
   const [rate, setRate] = useState("1.00X");
-  const [loop, setLoop] = useState(true);
+  const [loop, setLoop] = useState(false);
   const [totalDuration, setTotalDuration] = useState("00:00:00");
   const [runningDuration, setRunningDuration] = useState("00:00:00");
   const setLoading = useStore((state: any) => state.setLoading);
@@ -45,6 +45,8 @@ export default function Home() {
       setPause(chapter);
     }
   }
+
+  function playNext() {}
 
   function playAudio(chapter: number) {
     if (currentSound && currentId && currentId === chapter) {
