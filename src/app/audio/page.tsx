@@ -2,14 +2,35 @@
 import Image from "next/image";
 import surahs from "@/data/surahs";
 import { Howl, Howler } from "howler";
-import { Spline_Sans, Spline_Sans_Mono, Fira_Code } from "next/font/google";
+import {
+  Spline_Sans,
+  Spline_Sans_Mono,
+  Fira_Code,
+  Roboto,
+  Roboto_Mono,
+  Source_Sans_3,
+  IBM_Plex_Mono,
+  IBM_Plex_Sans,
+  Roboto_Slab,
+  JetBrains_Mono,
+  Roboto_Flex,
+} from "next/font/google";
 import { useState, useEffect } from "react";
 import useStore from "@/state/state";
-import { PuffLoader } from "react-spinners";
+import { PuffLoader, ScaleLoader, RingLoader } from "react-spinners";
 
-const spline = Spline_Sans({ subsets: ["latin"], weight: ["400"] });
-const fira = Spline_Sans_Mono({ subsets: ["latin"], weight: ["400"] });
-
+const spline = Spline_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
+const fira = Spline_Sans_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
+const roboto = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+});
 export default function Home() {
   const [active, setActive] = useState("telugu");
   const [folder, setFolder] = useState("teluguaudio");
@@ -111,10 +132,11 @@ export default function Home() {
               closePrevPause();
               Howler.stop();
               setCurrentSound("");
+              setCurrent("");
             }
           }}
           className={`px-4 py-2 bg-[rgb(32,32,32)] rounded-lg flex justify-center items-center cursor-pointer ${
-            active === "telugu" ? "bg-slate-800" : ""
+            active === "telugu" ? "bg-gray-800" : ""
           }`}
         >
           Telugu
@@ -127,10 +149,11 @@ export default function Home() {
               closePrevPause();
               Howler.stop();
               setCurrentSound("");
+              setCurrent("");
             }
           }}
           className={`px-4 py-2 bg-[rgb(32,32,32)] rounded-lg flex justify-center items-center cursor-pointer ${
-            active === "hindi" ? "bg-slate-800" : ""
+            active === "hindi" ? "bg-gray-800" : ""
           }`}
         >
           Hindi
@@ -143,10 +166,11 @@ export default function Home() {
               closePrevPause();
               Howler.stop();
               setCurrentSound("");
+              setCurrent("");
             }
           }}
           className={`px-4 py-2 bg-[rgb(32,32,32)] rounded-lg flex justify-center items-center cursor-pointer ${
-            active === "english" ? "bg-slate-800" : ""
+            active === "english" ? "bg-gray-800" : ""
           }`}
         >
           English
@@ -156,33 +180,44 @@ export default function Home() {
         {main.map((item: any, index: number) => (
           <section
             key={index}
-            className={` w-[375px] flex px-6 py-2.5 text-[15px]  gap-6 bg-[rgb(32,32,32)] rounded-md justify-between items-center`}
+            className={`w-[375px] flex px-6 py-2.5 text-[15px]  gap-6 ${
+              currentId === item.chapter ? "bg-gray-800" : "bg-[rgb(32,32,32)]"
+            }  rounded-md justify-between items-center`}
           >
-            <section className="flex justify-center gap-6 bg-[rgb(32,32,32)]">
-              <section className="flex justify-center items-center bg-[rgb(32,32,32)]">
+            <section className="flex justify-center gap-6">
+              <section className="flex justify-center items-center">
                 <div
-                  className={`${fira.className} bg-[black] flex justify-center items-center rounded-full min-w-10 h-10`}
+                  className={`${fira.className} bg-[rgb(12,12,12)] text-white flex justify-center items-center rounded-xl min-w-10 h-10`}
                 >
-                  {item.chapter}
+                  {currentId === item.chapter &&
+                  currentSound &&
+                  currentSound.playing() ? (
+                    <ScaleLoader
+                      color="#36d7b7"
+                      height={20}
+                      width={2}
+                      speedMultiplier={1}
+                    />
+                  ) : (
+                    item.chapter
+                  )}
                 </div>
               </section>
 
-              <section className="flex flex-col gap-1 bg-[rgb(32,32,32)]">
-                <div
-                  className={`${spline.className} bg-[rgb(32,32,32)] text-lg`}
-                >
+              <section className="flex flex-col gap-1">
+                <div className={`${spline.className} text-lg`}>
                   {item.surah}
                 </div>
                 <div
-                  className={`${fira.className} bg-[rgb(32,32,32)] text-slate-400 text-base`}
+                  className={`${fira.className} text-[rgb(160,160,160)] text-base`}
                 >
                   {item.englishName}
                 </div>
               </section>
             </section>
-            <section className="flex flex-col justify-center gap-2 bg-[rgb(32,32,32)]">
+            <section className="flex flex-col justify-center gap-2">
               {/* <div className="bg-[rgb(32,32,32)]">time</div> */}
-              <div className="bg-[rgb(32,32,32)]">
+              <div className="">
                 {item.loading ? (
                   <PuffLoader color="#36d7b7" size={40} />
                 ) : item.paused ? (
@@ -205,7 +240,7 @@ export default function Home() {
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     fill="currentColor"
-                    className="size-11 bg-[rgb(32,32,32)] cursor-pointer"
+                    className="size-11 cursor-pointer"
                   >
                     <path
                       fillRule="evenodd"
