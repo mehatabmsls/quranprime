@@ -2,22 +2,10 @@
 import Image from "next/image";
 import surahs from "@/data/surahs";
 import { Howl, Howler } from "howler";
-import {
-  Spline_Sans,
-  Spline_Sans_Mono,
-  Fira_Code,
-  Roboto,
-  Roboto_Mono,
-  Source_Sans_3,
-  IBM_Plex_Mono,
-  IBM_Plex_Sans,
-  Roboto_Slab,
-  JetBrains_Mono,
-  Roboto_Flex,
-} from "next/font/google";
+import { Spline_Sans, Spline_Sans_Mono } from "next/font/google";
 import { useState, useEffect } from "react";
 import useStore from "@/state/state";
-import { PuffLoader, ScaleLoader, RingLoader } from "react-spinners";
+import { PuffLoader, ScaleLoader } from "react-spinners";
 
 const spline = Spline_Sans({
   subsets: ["latin"],
@@ -27,10 +15,7 @@ const fira = Spline_Sans_Mono({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
-const roboto = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
-});
+
 export default function Home() {
   const [active, setActive] = useState("telugu");
   const [folder, setFolder] = useState("teluguaudio");
